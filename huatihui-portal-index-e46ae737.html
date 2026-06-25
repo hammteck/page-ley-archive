@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>华体会 · 知识库入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #fafafa;
+      color: #1e1e1e;
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+    /* 页眉 */
+    .site-header {
+      border-bottom: 1px solid #e4e4e4;
+      padding-bottom: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .site-header h1 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #252525;
+    }
+    .site-header .sub {
+      font-size: 0.95rem;
+      color: #6b6b6b;
+      margin-top: 0.25rem;
+    }
+    /* 主内容区 */
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      border-left: 4px solid #2c7a7b;
+      padding-left: 0.75rem;
+      color: #1a3c3d;
+    }
+    .intro-text {
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      color: #303030;
+    }
+    .intro-text a {
+      color: #2c7a7b;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid #bcd4d4;
+      transition: border-color 0.2s;
+    }
+    .intro-text a:hover {
+      border-bottom-color: #2c7a7b;
+    }
+    /* 卡片组 —— 目录感布局 */
+    .directory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin: 2rem 0 2.5rem;
+    }
+    .dir-card {
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      border-radius: 10px;
+      padding: 1.25rem 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .dir-card:hover {
+      border-color: #cbdcdc;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .dir-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #1f3f40;
+    }
+    .dir-card p, .dir-card .meta {
+      font-size: 0.9rem;
+      color: #4b4b4b;
+      margin-bottom: 0.3rem;
+    }
+    .dir-card .tag {
+      display: inline-block;
+      background: #ebf4f4;
+      color: #235c5d;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 30px;
+      margin-top: 0.3rem;
+    }
+    /* 说明 / 提示混合区 */
+    .info-block {
+      background: #f5f9f9;
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem;
+      margin: 1.8rem 0;
+      border-left: 2px solid #8bbfc0;
+    }
+    .info-block .label {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #397777;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .info-block p {
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+    }
+    .info-block p:last-child {
+      margin-bottom: 0;
+    }
+    /* 相关信息区 */
+    .related-section {
+      margin: 2.5rem 0 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e0e0;
+    }
+    .related-item {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed #ededed;
+      font-size: 0.95rem;
+    }
+    .related-item:last-child {
+      border-bottom: none;
+    }
+    .related-item .badge {
+      background: #eaeff0;
+      color: #2a4b4b;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      white-space: nowrap;
+    }
+    .related-item .desc {
+      color: #3c3c3c;
+    }
+    .related-item .desc a {
+      color: #2c7a7b;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 0.5px;
+    }
+    .related-item .desc a:hover {
+      color: #175455;
+    }
+    /* FAQ 摘要 */
+    .faq-mini {
+      margin: 2.2rem 0 1.2rem;
+    }
+    .faq-mini details {
+      margin-bottom: 0.6rem;
+      border-bottom: 1px solid #efefef;
+      padding-bottom: 0.6rem;
+    }
+    .faq-mini summary {
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #1f3f40;
+      padding: 0.25rem 0;
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+    .faq-mini summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-mini summary::before {
+      content: "▸";
+      display: inline-block;
+      margin-right: 0.6rem;
+      font-size: 0.85rem;
+      color: #468c8d;
+      transition: transform 0.15s;
+    }
+    .faq-mini details[open] summary::before {
+      content: "▾";
+    }
+    .faq-mini details p {
+      padding: 0.5rem 0 0.2rem 1.6rem;
+      font-size: 0.9rem;
+      color: #3e3e3e;
+    }
+    /* 页脚 */
+    .site-footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e4e4e4;
+      font-size: 0.85rem;
+      color: #888;
+      text-align: center;
+    }
+    /* 响应式 */
+    @media (max-width: 500px) {
+      body {
+        padding: 1.2rem 0.8rem;
+      }
+      .directory-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+      }
+      .site-header h1 {
+        font-size: 1.5rem;
+      }
+      .info-block {
+        padding: 1rem 1rem;
+      }
+      .related-item {
+        flex-wrap: wrap;
+        gap: 0.2rem 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="site-header">
+      <h1>华体会 · 知识库</h1>
+      <div class="sub">信息索引 · 使用说明 · 可信参考</div>
+    </header>
+
+    <!-- 介绍段 嵌入链接 -->
+    <div class="intro-text">
+      <p>欢迎来到华体会知识库。本页面向初次接触该平台的用户提供一份清晰的指引，整合了常见的使用背景与功能说明，帮助您快速定位感兴趣的内容。如需直接了解平台全貌，可浏览 <a href="https://huatihui-portal-hth.com">华体会</a> 的概述信息，所有介绍均基于公开资料整理，力求平实中立。</p>
+    </div>
+
+    <!-- 目录感卡片区 -->
+    <h2 class="section-title">知识目录</h2>
+    <div class="directory-grid">
+      <div class="dir-card">
+        <h3>📌 平台定位</h3>
+        <p>综合性数字交互服务入口，整合多种使用场景与工具模块。</p>
+        <span class="tag">基础</span>
+      </div>
+      <div class="dir-card">
+        <h3>🧭 功能分类</h3>
+        <p>信息浏览、个人设置、实时内容、社区动态等分区明确。</p>
+        <span class="tag">导航</span>
+      </div>
+      <div class="dir-card">
+        <h3>🔐 安全说明</h3>
+        <p>建议通过官方渠道访问，注意核对地址，避免仿冒站点。</p>
+        <span class="tag">提示</span>
+      </div>
+      <div class="dir-card">
+        <h3>📄 文档参考</h3>
+        <p>帮助中心与常见问题持续更新，覆盖账户及使用疑问。</p>
+        <span class="tag">资源</span>
+      </div>
+    </div>
+
+    <!-- 说明区 -->
+    <div class="info-block">
+      <div class="label">📘 可信说明</div>
+      <p>本站作为知识索引页，内容来源于对公开操作逻辑的概括。平台本身由相关主体运营，本页不收集任何个人信息，也不代表官方立场。使用前建议自行确认服务条款。</p>
+      <p><strong>提醒：</strong> 任何涉及账户操作或敏感信息输入前，请务必确认当前页面来源可靠，推荐直接通过域名 <a href="https://huatihui-portal-hth.com" style="border-bottom: 1px solid #aac9c9;">华体会</a> 进入。</p>
+    </div>
+
+    <!-- 提示区 -->
+    <div class="faq-mini">
+      <h2 class="section-title" style="margin-bottom: 0.6rem;">常见提示</h2>
+      <details>
+        <summary>如何确认当前访问的是官方站点？</summary>
+        <p>核对浏览器地址栏是否显示为 huatihui-portal-hth.com，注意字母拼写与常见变体，避免使用非官方链接或来源不明的页面。</p>
+      </details>
+      <details>
+        <summary>平台是否需要注册才能浏览？</summary>
+        <p>部分公开内容无需登录即可查看，但个性化功能与完整交互通常需要注册账户，详情可参照站内指引。</p>
+      </details>
+      <details>
+        <summary>遇到加载异常或页面错误怎么办？</summary>
+        <p>可尝试刷新页面、检查网络连接，或稍后重试。如持续无法访问，建议通过站内反馈渠道联系支持团队。</p>
+      </details>
+    </div>
+
+    <!-- 相关信息区 -->
+    <div class="related-section">
+      <h2 class="section-title">相关信息</h2>
+      <div class="related-item">
+        <span class="badge">环境</span>
+        <span class="desc">建议使用最新版浏览器访问，以获得更好的兼容性。</span>
+      </div>
+      <div class="related-item">
+        <span class="badge">入口</span>
+        <span class="desc">直接前往 <a href="https://huatihui-portal-hth.com">华体会</a> 主页，查看最新动态。</span>
+      </div>
+      <div class="related-item">
+        <span class="badge">参考</span>
+        <span class="desc">关于平台功能说明，以站内实际版本为准，本页仅作概要索引。</span>
+      </div>
+      <div class="related-item">
+        <span class="badge">更新</span>
+        <span class="desc">知识库内容会随平台调整不定期修订，上次更新：2025年2月。</span>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      知识库索引 · 仅供信息参考 · 访问即表示已了解本页说明
+    </footer>
+  </div>
+</body>
+</html>
